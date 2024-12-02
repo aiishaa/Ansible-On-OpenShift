@@ -4,7 +4,7 @@
   gather_facts: no
   tasks:
     - name: List all pods in the OpenShift project (namespace)
-      k8s_facts:
+      kubernetes.core.k8s_info:
         kind: Pod
         namespace: aap
       register: pod_facts

@@ -1,0 +1,15 @@
+---
+- name: List Pods in OpenShift
+  hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: List all pods in the OpenShift project (namespace)
+      k8s_facts:
+        kind: Pod
+        namespace: aap
+      register: pod_facts
+
+    - name: Display pod names
+      debug:
+        msg: "{{ item.metadata.name }}"
+      loop: "{{ pod_facts.resources }}"

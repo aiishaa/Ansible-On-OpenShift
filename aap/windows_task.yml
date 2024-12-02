@@ -1,6 +1,8 @@
-- hosts:
-
-- name: Create Development folder
-  win_file:
-    path: C:\Development
-    state: directory
+---
+- name: List Pods in OpenShift
+  hosts: win_server1
+  tasks:
+    - name: Create Development folder
+      win_file:
+        path: C:\Development
+        state: directory

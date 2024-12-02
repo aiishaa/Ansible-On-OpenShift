@@ -5,6 +5,7 @@
   tasks:
     - name: Get cluster information
       kubernetes.core.k8s_info:
+        kind: Namespace
       register: cluster_info
 
     - name: Show cluster info

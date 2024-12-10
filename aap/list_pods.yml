@@ -17,7 +17,7 @@
       kubernetes.core.k8s_info:
         kind: Pod
         namespace: "{{ namespace }}"
-      when: item.status.succeeded is defined and item.status.succeeded == 1
+      when: item.status.succeeded is defined and item.status.succeeded > 0
       register: pod_info
 
     - name: Dump the pod info

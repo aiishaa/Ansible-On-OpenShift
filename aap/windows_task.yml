@@ -5,12 +5,19 @@
     - name: Install IIS (Web-Server only) and MSMQ-server
       win_feature:
         name: " {{item}} "
+        include_sub_features: true
+        include_management_tools: true
         state: present
         restart: yes
       loop:
         - Web-Server
-        - MSMQ-Server
+        - MSMQ-Server  
+      register: win_feature
 
+    - name: Reboot if installing Web-Server feature requires it
+      ansible.windows.win_reboot:
+      when: win_feature.reboot_required
+  
     - name: Ensure IIS, MSMQ services are running
       win_service:
         name: " {{item}} "

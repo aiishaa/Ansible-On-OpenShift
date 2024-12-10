@@ -21,10 +21,10 @@
   
     - name: Ensure IIS, MSMQ services are running
       win_service:
-        name: " {{item}} "
+        name: "MSMQ"
         state: started
         path: 'C:\Windows\system32\mqsvc.exe'
         start_mode: auto
       loop:
         # - "Web-Server"
-        - "MSMQ"
+        # - "MSMQ"

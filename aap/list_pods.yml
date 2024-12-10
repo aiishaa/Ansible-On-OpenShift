@@ -23,12 +23,3 @@
     - name: Dump the pod info
       debug:
         msg: "{{ pod_info }}"
-
-    # - name: Delete archieve-job pods that in complete state
-    #   kubernetes.core.k8s:
-    #     name: "{{ item.metadata.name }}"
-    #     namespace: "{{ namespace }}"
-    #     kind: Pod
-    #     state: absent
-    #   loop: "{{ pod_info.resources }}"
-    #   when: pod_info.resources is defined

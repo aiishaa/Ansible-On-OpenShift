@@ -13,7 +13,7 @@
     - name: Ensure MSMQ service is running
       win_service:
         name: " {{item}} "
-        state: present
+        state: started
         start_mode: auto
       loop:
         - web-server

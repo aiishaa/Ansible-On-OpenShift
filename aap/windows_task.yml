@@ -13,10 +13,11 @@
         - Web-Server
         - MSMQ-Server  
       register: win_feature
-
-    - name: Reboot if installing Web-Server feature requires it
+      
+    - name: Reboot if installing Web-Server or MSMQ-Server feature requires it
       ansible.windows.win_reboot:
-      when: win_feature.reboot_required
+      when: 
+        - win_feature.results | selectattr('reboot_required', 'equalto', true) | length > 0
   
     - name: Ensure IIS, MSMQ services are running
       win_service:

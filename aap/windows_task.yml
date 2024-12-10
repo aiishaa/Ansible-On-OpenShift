@@ -9,7 +9,7 @@
         restart: yes
       loop:
         - web-server
-        - MSMQ-Server
+        - MSMQ
 
     # - name: Ensure MSMQ service is running
     #   win_service:

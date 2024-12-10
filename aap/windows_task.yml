@@ -11,7 +11,7 @@
         restart: yes
       loop:
         - "Web-Server"
-        - "MSMQ-Server"
+        - "MSMQ"
       register: win_feature
       
     - name: Reboot if installing Web-Server or MSMQ-Server feature requires it

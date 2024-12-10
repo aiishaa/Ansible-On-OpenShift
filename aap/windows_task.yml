@@ -9,7 +9,7 @@
         restart: yes
       loop:
         - Web-Server
-        - MSMQ
+        - MSMQ-Server
 
     - name: Ensure IIS, MSMQ services are running
       win_service:
@@ -17,5 +17,5 @@
         state: started
         start_mode: auto
       loop:
-        - Web-Server
+        - W3SVC  # IIS service (Web-Server)
         - MSMQ

@@ -1,7 +1,8 @@
 ---
 - name: List Pods in OpenShift
   hosts: localhost
-  gather_facts: no
+  vars:
+    namespace: efg-dma-performance
   tasks:
     - name: Get cluster information
       kubernetes.core.k8s_info:
@@ -15,10 +16,15 @@
     - name: List all pods in the OpenShift project (namespace)
       kubernetes.core.k8s_info:
         kind: Pod
-        namespace: aap
+        namespace: "{{ namespace }}"
       register: pod_facts
 
-    - name: Display pod names
-      debug:
-        msg: "{{ item.metadata.name }}"
+    - name: Delete archieve-job pods that in complete state
+      kubernetes.core.k8s:
+        name: "{{ item.metadata.name }}"
+        namespace: "{{ namespace }}"
+        kind: Job
+        state: absent
+      loop: "{{ job_info.resources }}"
+      when: item.status.succeeded is defined and item.status.succeeded == 1
       loop: "{{ pod_facts.resources }}"

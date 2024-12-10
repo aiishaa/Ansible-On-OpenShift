@@ -2,7 +2,7 @@
 - name: Delete archive jobs that are in complete state
   hosts: localhost
   vars:
-    namespace: aap
+    namespace: efg-dma-performance
   tasks:
     - name: Get cluster information
       kubernetes.core.k8s_info:

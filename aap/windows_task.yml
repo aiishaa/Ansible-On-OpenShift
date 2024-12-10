@@ -2,10 +2,19 @@
 - name: simple playbook on windows server
   hosts: all
   tasks:
-    - name: Install IIS (Web-Server only) and MSMQ
+    - name: Install IIS (Web-Server only) and MSMQ-server
       ansible.windows.win_feature:
         name: " {{item}} "
         state: present
+      loop:
+        - web-server
+        - MSMQ-Server
+
+    - name: Ensure MSMQ service is running
+      win_service:
+        name: " {{item}} "
+        state: present
+        start_mode: auto
       loop:
         - web-server
         - MSMQ-Server

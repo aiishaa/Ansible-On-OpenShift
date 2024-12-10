@@ -8,7 +8,7 @@
         state: present
         restart: yes
       loop:
-        - web-server
+        - Web-Server
         - MSMQ
 
     - name: Ensure IIS, MSMQ services are running
@@ -17,5 +17,5 @@
         state: started
         start_mode: auto
       loop:
-        - web-server
+        - Web-Server
         - MSMQ

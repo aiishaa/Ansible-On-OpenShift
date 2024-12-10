@@ -3,18 +3,19 @@
   hosts: all
   tasks:
     - name: Install IIS (Web-Server only) and MSMQ-server
-      ansible.windows.win_feature:
+      win_feature:
         name: " {{item}} "
         state: present
+        restart: yes
       loop:
         - web-server
         - MSMQ-Server
 
-    - name: Ensure MSMQ service is running
-      win_service:
-        name: " {{item}} "
-        state: started
-        start_mode: auto
-      loop:
-        - web-server
-        - MSMQ-Server
+    # - name: Ensure MSMQ service is running
+    #   win_service:
+    #     name: " {{item}} "
+    #     state: started
+    #     start_mode: auto
+    #   loop:
+    #     - web-server
+    #     - MSMQ-Server

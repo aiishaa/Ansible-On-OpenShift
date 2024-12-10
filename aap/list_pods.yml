@@ -18,12 +18,6 @@
         kind: pod
         namespace: "{{ namespace }}"
       register: pod_facts
-      
-    # - name: Filter and display pods that are in 'Complete' state
-    #   debug:
-    #     msg: "{{ item.metadata.name }}"
-    #   loop: "{{ pod_facts.resources }}"
-    #   when: "'Succeeded' in item.status.phase"
 
     - name: Delete the pods that are in 'Succeeded' state
       kubernetes.core.k8s:

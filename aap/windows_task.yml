@@ -1,6 +1,7 @@
 ---
 - name: simple playbook on windows server
   hosts: all
+  become: yes
   tasks:
     - name: Install IIS (Web-Server only) and MSMQ-server
       win_feature:

@@ -1,5 +1,5 @@
 ---
-- name: List Pods in OpenShift
+- name: Delete archive jobs that are in complete state
   hosts: localhost
   vars:
     namespace: efg-dma-performance
@@ -17,14 +17,18 @@
       kubernetes.core.k8s_info:
         kind: Pod
         namespace: "{{ namespace }}"
-      register: pod_facts
-
-    - name: Delete archieve-job pods that in complete state
-      kubernetes.core.k8s:
-        name: "{{ item.metadata.name }}"
-        namespace: "{{ namespace }}"
-        kind: Job
-        state: absent
-      loop: "{{ job_info.resources }}"
       when: item.status.succeeded is defined and item.status.succeeded == 1
-      loop: "{{ pod_facts.resources }}"
+      register: pod_info
+
+    - name: Dump the pod info
+      debug:
+        msg: "{{ pod_info }}"
+
+    # - name: Delete archieve-job pods that in complete state
+    #   kubernetes.core.k8s:
+    #     name: "{{ item.metadata.name }}"
+    #     namespace: "{{ namespace }}"
+    #     kind: Pod
+    #     state: absent
+    #   loop: "{{ pod_info.resources }}"
+    #   when: pod_info.resources is defined

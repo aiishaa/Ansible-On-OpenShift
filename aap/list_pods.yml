@@ -14,7 +14,9 @@
         var: cluster_info
 
     - name: Gather Kubernetes pod facts
-      k8s_facts:
+      k8s_info:
+        kind: pod
+        namespace: "{{ namespace }}"
       register: pod_facts
       
     - name: Filter and display pods that are in 'Complete' state

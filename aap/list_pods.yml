@@ -13,11 +13,11 @@
       debug:
         var: cluster_info
 
-    - name: List all pods in the OpenShift project (namespace)
-      kubernetes.core.k8s_info:
-        kind: Pod
-        namespace: "{{ namespace }}"
-      when: item.status.succeeded is defined and item.status.succeeded > 0
+    - name: Filter and display pods that are in 'Complete' state
+      debug:
+        msg: "{{ item.metadata.name }}"
+      loop: "{{ pod_facts.resources }}"
+      when: "'Complete' in item.status.phase"
       register: pod_info
 
     - name: Dump the pod info

@@ -10,8 +10,8 @@
         state: present
         restart: yes
       loop:
-        - Web-Server
-        - MSMQ-Server  
+        - "Web-Server"
+        - "MSMQ-Server"
       register: win_feature
       
     - name: Reboot if installing Web-Server or MSMQ-Server feature requires it
@@ -19,10 +19,10 @@
       when: 
         - win_feature.results | selectattr('reboot_required', 'equalto', true) | length > 0
   
-    - name: Ensure IIS, MSMQ services are running
-      win_service:
-        name: " {{item}} "
-        state: started
-        start_mode: auto
-      loop:
-        -  W3SVC
+    # - name: Ensure IIS, MSMQ services are running
+    #   win_service:
+    #     name: " {{item}} "
+    #     state: started
+    #     start_mode: auto
+    #   loop:
+    #     -  W3SVC

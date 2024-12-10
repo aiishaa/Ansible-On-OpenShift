@@ -13,6 +13,10 @@
       debug:
         var: cluster_info
 
+    - name: Gather Kubernetes pod facts
+      k8s_facts:
+      register: pod_facts
+      
     - name: Filter and display pods that are in 'Complete' state
       debug:
         msg: "{{ item.metadata.name }}"

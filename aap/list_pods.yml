@@ -22,6 +22,6 @@
     - name: Filter and display pods that are in 'Complete' state
       debug:
         msg: "{{ item.metadata.name }}"
-      loop: "{{ pod_facts.resources }}"
+      loop: "{{ pod_facts }}"
       when: "'Succeeded' in item.status.phase"
      

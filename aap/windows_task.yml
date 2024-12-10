@@ -23,7 +23,7 @@
       win_service:
         name: " {{item}} "
         state: started
-        path: "C:\Windows\system32\mqsvc.exe"
+        path: 'C:\Windows\system32\mqsvc.exe'
         start_mode: auto
       loop:
         # - "Web-Server"

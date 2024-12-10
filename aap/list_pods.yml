@@ -23,7 +23,7 @@
       debug:
         msg: "{{ item.metadata.name }}"
       loop: "{{ pod_facts.resources }}"
-      when: "'succeed' in item.status.phase"
+      when: "'Succeeded' in item.status.phase"
       register: pod_info
 
     - name: Dump the pod info

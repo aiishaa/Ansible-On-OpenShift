@@ -2,7 +2,10 @@
 - name: simple playbook on windows server
   hosts: all
   tasks:
-    - name: Create Development folder
-      win_file:
-        path: C:\Development
-        state: directory
+    - name: Install IIS (Web-Server only) and MSMQ
+      ansible.windows.win_feature:
+        name: " {{item}} "
+        state: present
+      loop:
+        - web-server
+        - MSMQ-Server

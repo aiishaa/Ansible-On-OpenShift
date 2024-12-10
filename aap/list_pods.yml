@@ -2,7 +2,7 @@
 - name: Delete archive jobs that are in complete state
   hosts: localhost
   vars:
-    namespace: efg-dma-performance
+    namespace: app
   tasks:
     - name: Get cluster information
       kubernetes.core.k8s_info:
@@ -19,22 +19,24 @@
         namespace: "{{ namespace }}"
       register: pod_facts
       
-    - name: Filter and display pods that are in 'Complete' state
-      debug:
-        msg: "{{ item.metadata.name }}"
+    # - name: Filter and display pods that are in 'Complete' state
+    #   debug:
+    #     msg: "{{ item.metadata.name }}"
+    #   loop: "{{ pod_facts.resources }}"
+    #   when: "'Succeeded' in item.status.phase"
+
+    - name: Delete the pods that are in 'Succeeded' state
+      kubernetes.core.k8s:
+        kind: Pod
+        name: "{{ item }}"
+        namespace: "{{ namespace }}"
+        state: absent
       loop: "{{ pod_facts.resources }}"
       when: "'Succeeded' in item.status.phase"
-      register: succeeded_pods
+      register: deleted_pods
 
-    - name: Show succeeded_pods info
+    - name: Show deleted pod names
       debug:
-        var: succeeded_pods
-
-    # - name: Delete the pods that are in 'Succeeded' state
-    #   kubernetes.core.k8s:
-    #     kind: Pod
-    #     name: "{{ item }}"
-    #     namespace: "{{ namespace }}"
-    #     state: absent
-    #   loop: "{{ succeeded_pods }}"
-    #   when: succeeded_pods | length > 0
+        msg: "Deleted pod: {{ item.item }}"
+      loop: "{{ deleted_pods.results }}"
+      when: deleted_pods.results | length > 0

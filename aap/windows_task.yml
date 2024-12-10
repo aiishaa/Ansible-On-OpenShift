@@ -11,11 +11,11 @@
         - web-server
         - MSMQ
 
-    # - name: Ensure MSMQ service is running
-    #   win_service:
-    #     name: " {{item}} "
-    #     state: started
-    #     start_mode: auto
-    #   loop:
-    #     - web-server
-    #     - MSMQ-Server
+    - name: Ensure IIS, MSMQ services are running
+      win_service:
+        name: " {{item}} "
+        state: started
+        start_mode: auto
+      loop:
+        - web-server
+        - MSMQ

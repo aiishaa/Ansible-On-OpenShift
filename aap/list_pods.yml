@@ -28,7 +28,7 @@
     - name: Delete the pods that are in 'Succeeded' state
       kubernetes.core.k8s:
         kind: Pod
-        name: "{{ item }}"
+        name: "{{ item.metadata.name }}"
         namespace: "{{ namespace }}"
         state: absent
       loop: "{{ pod_facts.resources }}"

@@ -25,4 +25,5 @@
         state: started
         start_mode: auto
       loop:
-        -  "W3SVC"
+        - "Web-Server"
+        - "MSMQ-Server"
